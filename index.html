@@ -1,163 +1,381 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WebCall Test Page</title>
-  <style>
-    button {
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
+<script src="https://call.flyfonetalk.com/templates/assets/components/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="https://call.flyfonetalk.com/templates/js/plugins/webcall.api.js?1740638749"></script>
+<script type="text/javascript" src="https://call.flyfonetalk.com/templates/js/plugins/webcall.notify.js?1740638749"></script>
+<script type="text/javascript" src="https://call.flyfonetalk.com/templates/js/voice/sipjs/sip-0.7.7.min.js?1740638749"></script>
+<script type="text/javascript" src="https://call.flyfonetalk.com/templates/js/voice/modernizr.custom.js?1740638749"></script>
+<script type="text/javascript" src="https://call.flyfonetalk.com/templates/js/voice/classie.js?1740638749"></script>
+<script type="text/javascript" src="https://call.flyfonetalk.com/templates/js/voice/notificationFx.js?1740638749"></script>
+<script type="text/javascript" src="https://call.flyfonetalk.com/templates/js/voice/sipjs/webphone_notificationFxCall.js?1740638749"></script>
+<link rel="stylesheet" href="https://call.flyfonetalk.com/templates/css/ace/bootstrap.css?1740638749" />
+<link rel="stylesheet" href="https://call.flyfonetalk.com/templates/css/font-awesome.min.css?1740638749" />
+<link rel="stylesheet" href="https://call.flyfonetalk.com/templates/css/ace/ace.css?1740638749" />
+<link rel="stylesheet" href="https://call.flyfonetalk.com/templates/css/frame.css?1740638749" />
+<link rel="stylesheet" href="https://call.flyfonetalk.com/templates/css/keypad.css?1740638749" />
+<link rel="stylesheet" href="https://call.flyfonetalk.com/templates/css/voice/notificationFx/ns-default.css?1740638749" />
+<link rel="stylesheet" href="https://call.flyfonetalk.com/templates/css/voice/notificationFx/ns-style-growl.css?1740638749" />
+<link rel="stylesheet" href="https://call.flyfonetalk.com/templates/css/voice/notificationFx/ns-style-attached.css?1740638749" />
+<link rel="stylesheet" href="https://call.flyfonetalk.com/templates/assets/components/chosen/chosen.css"/>
+<script src="https://call.flyfonetalk.com/templates/assets/components/chosen/chosen.jquery.min.js"></script>
+<audio id="chat_sound" controls class="dpn" style="display: none">
+    <source src="https://call.flyfonetalk.com/templates/assets/sounds/notify.mp3" type="audio/mp3"/>
+</audio>
+<audio id="sound_income_call" controls loop class="dpn" style="display: none">
+    <source src="https://call.flyfonetalk.com/templates/assets/sounds/ringing.wav" type="audio/wav"/>
+</audio>
+
+<audio id="sound_dtmf" style="display: none">
+    <source src="https://call.flyfonetalk.com/templates/assets/sounds/dtmf_star.ogg" type="audio/ogg"/>
+</audio>
+<script type="text/javascript">
+    var callCode = 'd5a24856959a183b69834f99fad86e5d';
+    window.addEventListener("message", receiveMessageFromParent, false);
+    function receiveMessageFromParent(event) {
+        var message = event.data;
+        if(typeof message == "undefined"){
+            return;
+        }
+
+        var data = JSON.parse(message);
+        if (data === undefined){
+            return;
+        }
+
+        var number = data['phone'].trim();
+        var crm_ticket_id = data['crm_ticket_id'].trim();
+        if(number === ""){
+            return;
+        }
+        if(/^[0-9]*$/gm.test(number) == false){
+            return;
+        }
+
+        jQuery('#callphone').val(number);
+        var ticketCode = makeUnique(20);
+        voiceNotificationLib.dial_make_a_call(number, '', 'outgoing', ticketCode, crm_ticket_id);
+    }
+    function makeUnique(length) {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        for (var i = 0; i < (length + 1); i++)
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+        return text;
     }
 
-    button:hover {
-      background-color: #0056b3;
+    function censorPhone(phone, num){
+        var first = (phone.substring(0, num));
+        var result = phone.replace(first, "*****");
+        return result;
     }
-  </style>
-</head>
+</script>
+<script type="text/javascript">
 
-<body>
-  <h1>WebCall Test Page</h1>
-  <p>Click the call button below to test the WebCall integration.</p>
+    webcallApi.csrf_name = 'csrf_webcall';
+    webcallApi.csrf_hash = '65ae4e5235d728f750fd59e3d47c486a';
+    var permission_callout = 'y';
 
-  <script type="text/javascript"
-    src="https://call.flyfonetalk.com/js/load.call?key=d5a24856959a183b69834f99fad86e5d"></script>
-</body>
+    var auth_user = '11054';
+    var auth_pass = 'we5kstlg4xtyqse';
+    var ast_host = 'voice.digitel.vn';
+    var ast_port = '8089';
+    var full_name = 'EL 01';
+    var display_val = 'EL 01'
+    var phone_type = 'webcall';
+    var merchant_id = '5810';
+    var merchant_code = 'MjTRs0apb4xiIKFd35hoOC8H7mAYzkynWXwtEgL6';
+    var hotline_num = '1666';
+    var hotline_prefix = '';
+    var extension = '11054';
+    var user_id = '10054';
+    var show_customer_phone = 'n';
+</script>
+<style>
+    .custom-input {
+        background: #FFFABB;
+        border: #337ab7 solid 1px;
+        width: 98%;
+    }
 
-</html>
+</style>
 
-<!---
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robert John Gajelomo - Full Stack Developer</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="storage/source/css/style.css">
-</head>
-
-<body>
-  <header>
-    <nav>
-      <div class="logo">DEV</div>
-      <div class="hamburger">
-        <i class="fas fa-bars"></i>
-      </div>
-      <div class="nav-links">
-        <a href="#hero">Home</a>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-      </div>
-    </nav>
-  </header>
-
-  <main>
-    <section id="hero">
-      <div class="background-gradient"></div>
-      <div class="hero-content">
-        <h1>Full Stack Developer</h1>
-        <p>Building digital experiences that make a difference. Specialized in creating modern, scalable web
-          applications or automating the process with cutting-edge technologies.</p>
-        <a href="#contact" class="cta-button">Let's Work Together</a>
-      </div>
-    </section>
-
-    <section id="skills">
-      <h2 class="section-title">Technical Expertise</h2>
-      <div class="skills-grid">
-        <div class="skill-card">
-          <i class="fas fa-code"></i>
-          <h3>Frontend Development</h3>
-          <p>Reactjs, Modern JavaScript , Bootstrap , UI design</p>
-        </div>
-        <div class="skill-card">
-          <i class="fas fa-server"></i>
-          <h3>Backend Development </h3>
-          <p>Node.js, Express, PHP,REST APIs, Laravel, LAMP Stack</p>
-        </div>
-        <div class="skill-card">
-          <i class="fas fa-database"></i>
-          <h3>Database & Cloud</h3>
-          <p>PostgreSQL, MongoDB, Redis, Mysql, Msql , BigQuery, NoSQL</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="projects">
-      <h2 class="section-title">Featured Work</h2>
-      <div class="projects-grid">
-        <div class="project-card">
-          <img src="/api/placeholder/400/320" alt="Project 1">
-          <div class="project-content">
-            <h3>AI-Powered Analytics Platform</h3>
-            <p>A scalable analytics platform built with React, Node.js, and TensorFlow.</p>
-            <div class="project-links">
-              <a href="#"><i class="fab fa-github"></i> View Code</a>
-              <a href="#"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+<div id="notification_call_panel" class="center-content clearfix">
+    <div id="customer-output" style="padding: 10px 5px; display: none">
+        <div id="receive_income_call_panel" style="font-size: 13px">
+    <div class="notice-header">
+        <div class="row no-margin">
+            <div class="clearfix">
+                <div class="pull-left" style="width: 100%; text-align: left">
+                    <i class="fa fa-sign-in fa-lg"></i><b style="margin-left: 5px;" class="customer-title">GỌI RA</b>
+                    <i class="fa fa-link customer-link" style="float: right; display: none; cursor: pointer" ></i>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="project-card">
-          <img src="/api/placeholder/400/320" alt="Project 2">
-          <div class="project-content">
-            <h3>Real-time Collaboration Tool</h3>
-            <p>WebSocket-based collaboration platform with React and Node.js.</p>
-            <div class="project-links">
-              <a href="#"><i class="fab fa-github"></i> View Code</a>
-              <a href="#"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-            </div>
-          </div>
-        </div>
-        <div class="project-card">
-          <img src="/api/placeholder/400/320" alt="Project 3">
-          <div class="project-content">
-            <h3>E-commerce Microservices</h3>
-            <p>Distributed e-commerce system built with microservices architecture.</p>
-            <div class="project-links">
-              <a href="#"><i class="fab fa-github"></i> View Code</a>
-              <a href="#"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <section id="contact">
-      <h2 class="section-title">Get in Touch</h2>
-      <div class="contact-form">
-        <form id="contact-form" action="https://formspree.io/f/mjkkoodd" method="POST">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" name="name" id="name" required>
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" required>
-          </div>
-          <div class="form-group">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" required></textarea>
-          </div>
-          <button type="submit" class="cta-button">Send Message</button>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2024 Your Name. All rights reserved.</p>
-    <div class="social-links">
-      <a href="#"><i class="fab fa-github"></i></a>
-      <a href="#"><i class="fab fa-linkedin"></i></a>
-      <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
     </div>
-  </footer>
--->
+
+    <div id="customer-information-panel">
+        <div class="notice-info" style="margin-bottom: 0; padding-bottom: 0;text-align: left">
+            <div class="clearfix">
+                <div class="pull-left">
+                    <h5 class="blue smaller" style="margin-bottom: 3px;">Thông tin khách hàng</h5>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="pull-left">
+                    <i class="fa fa-user ml5" style="opacity: 0.6"></i><span style="margin-left: 5px;" class="customer-name"></span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="pull-left">
+                    <i class="fa fa-phone ml5" style="opacity: 0.6"></i><span style="margin-left: 5px;" class="customer-phone"></span>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="pull-left">
+                    <p style="margin-left: 20px; position: relative; margin-bottom: 0">
+                        <i class="fa fa-edit" style="opacity: 0.6; left: -14px; position: absolute; top: 4px;"></i>
+                        <span class="customer-note" style="margin-left: 4px"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="tranfer_call_panel"></div>
+
+    <div id="group_btn_call" class="group-btn" style="width: 228px; margin-top: 0; position: absolute; bottom: 36px">
+        <a id="btn_answer_call" class="btn btn-call btn-sm btn-success width98 m-t-3 btn_income_call btn_income_call_wc btn-round hide"> TRẢ LỜI</a>
+        <a id="btn_hangup_call" class="btn  btn-call btn-danger btn-sm width98 m-t-3 btn_income_call btn_income_call_wc btn-round  "onclick="voiceNotificationLib.income_hangup_call()">KẾT THÚC</a>
+        <a id="btn_end_call" class="btn btn-call btn-danger btn-sm width98 m-t-3 btn_answer_income_call btn_income_call_wc btn-round" onclick="voiceNotificationLib.income_end_call()">KẾT THÚC</a>
+        <a id="btn_cancel" class="btn  btn-call btn-danger btn-sm width98 m-t-3 btn_income_call_wc btn-round width50 " onclick="voiceNotificationLib.dial_make_cancel()">KẾT THÚC</a>
+    </div>
+
+    <div id="group_btn_call" class="group-btn" style="width: 230px; position: absolute; bottom: 0">
+        <a id="btn_hold_call"
+           class="btn btn-call btn-primary btn-sm width50 btn_answer_income_call btn_income_call_wc btn-round disabled "
+           onclick="voiceNotificationLib.income_hold_call()">HOLD</a>
+        <a id="btn_resume_call" class="btn btn-call btn-sm btn-yellow width50 btn_income_call_wc btn-round hide"
+           onclick="voiceNotificationLib.income_unhold_call()">RESUME</a>
+        <a id="btn_transfer_call"
+           class="btn btn-call btn-primary btn-sm width50 btn_answer_income_call btn_income_call_wc btn-round disabled"
+           onclick="voiceNotificationLib.make_transfer_call()">
+            TRANS</a>
+
+        <a id="btn_cancel_transfer" class="btn btn-call btn-yellow width50 btn-sm hide btn_income_call_wc btn-round"
+           onclick="voiceNotificationLib.go_back_answer_form()">BACK</a>
+
+<!--        <a id="btn_dtmf"-->
+<!--           class="btn btn-call btn-primary btn-sm width32 btn_answer_income_call btn_income_call_wc btn-round disabled"-->
+<!--           onclick="voiceNotificationLib.on_dtmf()">-->
+<!--            DTMF</a>-->
+
+        <a id="btn_cancel_dtmf" class="btn btn-call btn-yellow width33 btn-sm hide btn_income_call_wc btn-round"
+           onclick="voiceNotificationLib.go_back_answer_form()">BACK</a>
+
+    </div>
+</div>
+
+    </div>
+    <div id="call-input">
+        <input type="hidden" name="notification_call_panel_tc" value="rAdVXnLQZkuNJsGgE92e"/>
+        <div class="notification_callout_header"></div>
+        <div id="keypad">
+            <div class="container">
+    <div class="row">
+                <div class="col-md-4 col-md-offset-4 phone">
+            <div class="row1">
+                <div class="col-md-12 no-padding">
+                    <input type="tel" placeholder="0905044xxx" name="name" id="callphone" class="form-control tel" value=""  onkeypress="return voiceNotificationLib.enterToCall(event, this.value);"/>
+                    <a id="btn_make_call" onclick="voiceNotificationLib.dial_make_a_call(jQuery('#callphone').val(), '', 'outgoing', '1EGDu9gAxi6R8FaOpTyd');" class="btn btn-success btn-block flatbtn"><i class="fa fa-phone fa-lg"></i></a>
+                    <div class="num-pad">
+                        <div class="span4">
+                            <div class="num">
+                                <div class="txt">
+                                    1
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span4">
+                            <div class="num">
+                                <div class="txt">
+                                    2
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span4">
+                            <div class="num">
+                                <div class="txt">
+                                    3
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span4">
+                            <div class="num">
+                                <div class="txt">
+                                    4
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span4">
+                            <div class="num">
+                                <div class="txt">
+                                    5
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span4">
+                            <div class="num">
+                                <div class="txt">
+                                    6
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span4">
+                            <div class="num">
+                                <div class="txt">
+                                    7
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span4">
+                            <div class="num">
+                                <div class="txt">
+                                    8
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span4">
+                            <div class="num">
+                                <div class="txt">
+                                    9
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span4">
+                            <div class="num">
+                                <div class="txt">
+                                    *
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span4">
+                            <div class="num">
+                                <div class="txt">
+                                    0
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span4">
+                            <div class="num">
+                                <div class="txt">
+                                    #
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('.num').click(function () {
+            var num = $(this);
+            var text = $.trim(num.find('.txt').clone().children().remove().end().text());
+            var telNumber = $('#callphone');
+            $(telNumber).val(telNumber.val() + text);
+        });
+
+    });
+</script>        </div>
+        <div id="siphook_panel" class="dpn">
+            <div class="notice-header">
+                <div class="row no-margin">
+                    <div class="clearfix">
+                        <div class="pull-left"><i class="fa fa-sign-in fa-lg"></i>&nbsp;&nbsp; <b>GỌI VÀO</b></div>
+                        <div class="pull-right" onclick="webcall.closeIncomePanel(this)"><i class="fa fa-close fa-lg csp red"></i>&nbsp;&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+            <div class="notice-info">
+                <div class="clearfix">
+                    <div class="pull-left">
+                        <h5 class="blue smaller">Thông tin khách hàng</h5>
+                    </div>
+                    <div class="pull-right customer-info-view">
+                        <a class="csp">
+                            <i class="fa fa-info-circle fa-lg"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <div class="pull-left mb5">
+                        <i class="fa fa-user"></i>&nbsp&nbsp&nbsp&nbsp<span class="customer-name"></span>
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <div class="pull-left mb5">
+                        <i class="fa fa-users"></i> &nbsp<span class="group-name"></span>
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <div class="pull-left">
+                        <i class="fa fa-phone"></i>&nbsp&nbsp&nbsp<span class="customer-phone"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="notice-info" id="latest-contact">
+                <div class="clearfix">
+                    <div class="pull-left">
+                        <h5 class="blue smaller">Liên hệ gần nhất</h5>
+                    </div>
+                    <div class="pull-right">
+                        <a class="csp" onclick="voiceNotificationLib.add_call_note();"><i class="fa fa-pencil-square-o fa-lg"></i></a>
+                    </div>
+                </div>
+
+                <div class="clearfix last_note_panel">
+                    <div class="pull-left">
+                        <i class="fa fa-clock-o fa-lg"></i>&nbsp&nbsp<span id="last_note_date"></span>
+                    </div>
+                </div>
+                <div class="clearfix last_note_panel">
+                    <div class="pull-left">
+                        <i class="fa fa-comments-o fa-lg"></i> &nbsp<span id="last_note_data"></span>
+                    </div>
+                </div>
+
+                <div class="clearfix add_call_note_panel hide">
+                    <form action="https://call.flyfonetalk.com/voice_ajax/call_note" id="call_note_frm" class="form-horizontal" method="post" accept-charset="utf-8">
+<input type="hidden" name="act" value="save" style="display:none;" />
+<input type="hidden" name="csrf_webcall" value="65ae4e5235d728f750fd59e3d47c486a" style="display:none;" />
+                    <input type="hidden" id="ticket_code" name="ticket_code" value="" />
+                    <input type="hidden" id="call_type" name="call_type" value="" />
+                    <input type="hidden" id="cus_code" name="cus_code" value="" />
+
+
+                    <div class="form-group mb5">
+                        <div class="col-xs-12 ">
+                            <textarea id="call_note" name="call_note" class="form-control" placeholder="Ghi chú" style="height: 75px; width: 227px;"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group mb5">
+                        <div class="col-xs-12 ">
+                            <input type="button" class="btn btn-white btn-info btn-sm" value="Thêm mới" onclick="voiceNotificationLib.save_call_note();">
+                            <input type="button" class="btn btn-white btn-default btn-sm" value="Hủy" onclick="voiceNotificationLib.cancel_call_note();">
+                        </div>
+                    </div>
+
+
+                    </form>                </div>
+            </div>
+        </div>
+    </div>
+</div>
