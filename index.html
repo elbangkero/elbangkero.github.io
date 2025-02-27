@@ -1,45 +1,32 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebCall Test Page</title>
-    <style>
-        button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebCall Test Page</title>
+  <style>
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 
 <body>
-    <h1>WebCall Test Page</h1>
-    <p>Click the call button below to test the WebCall integration.</p>
-    <button id="webcallBtn">Start WebCall</button>
+  <h1>WebCall Test Page</h1>
+  <p>Click the call button below to test the WebCall integration.</p>
 
-    <!--Start of WebCall Script-->
-    <script type="text/javascript">
-
-        document.getElementById("webcallBtn").addEventListener("click", function () {
-            !function (t, e) {
-                var s = function (t) { s.q.push(t) }, n = s.s = t.createElement(e), a = t.getElementsByTagName(e)[0];
-                s.sq = function (t) { s.sq.push(t) }, s.q = [], s.sq = [], n.async = !0, n.setAttribute("charset", "utf-8");
-                n.src = "https://call.flyfonetalk.com/client/loader.js?code=d5a24856959a183b69834f99fad86e5d&location=" + window.location.protocol + "//" + window.location.hostname;
-                s.t = +new Date, n.type = "text/javascript", a.parentNode.insertBefore(n, a)
-            }(document, "script");
-        });
-
-    </script>
+  <script type="text/javascript"
+    src="https://call.flyfonetalk.com/js/load.call?key=d5a24856959a183b69834f99fad86e5d"></script>
 </body>
 
 </html>
