@@ -1,3 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebCall Test Page</title>
+    <style>
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>WebCall Test Page</h1>
+    <p>Click the call button below to test the WebCall integration.</p>
+    <button id="webcallBtn">Start WebCall</button>
+
+    <!--Start of WebCall Script-->
+    <script type="text/javascript">
+
+        document.getElementById("webcallBtn").addEventListener("click", function () {
+            !function (t, e) {
+                var s = function (t) { s.q.push(t) }, n = s.s = t.createElement(e), a = t.getElementsByTagName(e)[0];
+                s.sq = function (t) { s.sq.push(t) }, s.q = [], s.sq = [], n.async = !0, n.setAttribute("charset", "utf-8");
+                n.src = "https://call.flyfonetalk.com/client/loader.js?code=d5a24856959a183b69834f99fad86e5d&location=" + window.location.protocol + "//" + window.location.hostname;
+                s.t = +new Date, n.type = "text/javascript", a.parentNode.insertBefore(n, a)
+            }(document, "script");
+        });
+
+    </script>
+</body>
+
+</html>
+
+<!---
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,7 +78,7 @@
       <div class="hero-content">
         <h1>Full Stack Developer</h1>
         <p>Building digital experiences that make a difference. Specialized in creating modern, scalable web
-          applications with cutting-edge technologies.</p>
+          applications or automating the process with cutting-edge technologies.</p>
         <a href="#contact" class="cta-button">Let's Work Together</a>
       </div>
     </section>
@@ -42,22 +89,17 @@
         <div class="skill-card">
           <i class="fas fa-code"></i>
           <h3>Frontend Development</h3>
-          <p>React, Next.js, TypeScript, Tailwind CSS, Modern JavaScript</p>
+          <p>Reactjs, Modern JavaScript , Bootstrap , UI design</p>
         </div>
         <div class="skill-card">
           <i class="fas fa-server"></i>
-          <h3>Backend Development</h3>
-          <p>Node.js, Express, Python/Django, GraphQL, REST APIs</p>
+          <h3>Backend Development </h3>
+          <p>Node.js, Express, PHP,REST APIs, Laravel, LAMP Stack</p>
         </div>
         <div class="skill-card">
           <i class="fas fa-database"></i>
           <h3>Database & Cloud</h3>
-          <p>PostgreSQL, MongoDB, Redis, AWS, Docker, Kubernetes</p>
-        </div>
-        <div class="skill-card">
-          <i class="fas fa-layer-group"></i>
-          <h3>Architecture & DevOps</h3>
-          <p>Microservices, CI/CD, System Design, Cloud Architecture</p>
+          <p>PostgreSQL, MongoDB, Redis, Mysql, Msql , BigQuery, NoSQL</p>
         </div>
       </div>
     </section>
@@ -111,7 +153,7 @@
           </div>
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email"  name="email" id="email" required>
+            <input type="email" name="email" id="email" required>
           </div>
           <div class="form-group">
             <label for="message">Message</label>
@@ -131,4 +173,4 @@
       <a href="#"><i class="fab fa-twitter"></i></a>
     </div>
   </footer>
-  <!---Deployment-->
+-->
